@@ -252,4 +252,73 @@ str(foo.df)
 glimpse(foo.df) # inside dplyr
 summary(foo.df)
 
+# Element 4: Logical Expressions
+# Ask Yes/No questions
+
+# Relational operators
+# == Equivalency
+# != Non-equivalency
+# >, <, >=, <=
+# !x, where x is a logical vector: Negation
+
+# ALWAYS results in a logical vector!!
+# T/F, TRUE/FALSE
+# e.g.
+n > p
+
+# Logical operators
+# combining questions
+# & AND
+# | OR
+# %in% WITHIN
+
+# Subsetting with logical vectors
+# All healthy:
+subset(foo.df, foo.df$healthy == TRUE)
+subset(foo.df, healthy == TRUE)
+subset(foo.df, healthy)
+
+# All unhealthy:
+subset(foo.df, healthy == FALSE)
+subset(foo.df, healthy != TRUE)
+subset(foo.df, !healthy)
+
+# With numerical data:
+# quantity below 10:
+subset(foo.df, quantity < 10)
+
+# tails (below 10, beyond 20)
+subset(foo.df, quantity < 10 | quantity > 20)
+
+# impossible
+subset(foo.df, quantity < 10 & quantity > 20)
+
+# middle (10-20)
+subset(foo.df, quantity > 10 & quantity < 20)
+
+# Everything/meaningless
+subset(foo.df, quantity > 10 | quantity < 20)
+
+# With character data:
+# 100% match! NO pattern matching!
+# single: heart samples
+subset(foo.df, tissue == "Heart")
+
+# Muliple values: liver and heart
+subset(foo.df, tissue == "Liver" | tissue == "Heart")
+
+# NEVER do this!!!
+subset(foo.df, tissue == c("Liver", "Heart"))
+subset(foo.df, tissue == c("Heart", "Liver"))
+
+# long form:
+foo.df$tissue == c("Heart", "Liver")
+
+# Correct way: use %in%, which is like the short way of |
+subset(foo.df, tissue %in% c("Liver", "Heart"))
+subset(foo.df, tissue %in% c("Heart", "Liver"))
+
+# Which tissues have a high quantity?
+organs <- subset(foo.df$tissue, foo.df$quantity > 20)
+
 
